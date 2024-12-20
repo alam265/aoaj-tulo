@@ -6,8 +6,8 @@ const User = require("./models/User")
 const bcrypt = require("bcrypt")
 
 require("dotenv").config()
-
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 app.use(session({
     secret: process.env.SESSION_SECRET , 
     resave: false,            
@@ -23,9 +23,10 @@ const {checkLogin} = require("./middlewares/checkLogin")
 
 // Importing Routes 
 const authRoute = require("./routes/authenticationR")
+const adminRoute = require("./routes/admin.route")
 
 
-app.use("/", authRoute)
+app.use("/", adminRoute)
 
 
   
@@ -46,10 +47,15 @@ app.get("/checkLogin",checkLogin ,(req, res)=> {
 
 
 
+//404 page
+app.use((req,res, next)=> {
+  res.status(404).json({
+    message : " nai vai page"
+  })
+})
 
-
-app.listen(5000, (req, res)=> {
-    console.log("Listening ON Port 5000")
+app.listen(1359, ()=> {
+    console.log("server is running at 1359")
 })
     
 
