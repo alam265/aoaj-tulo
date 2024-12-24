@@ -1,8 +1,16 @@
-const { Sequelize } = require('sequelize');
+const mongoose = require('mongoose');
 
-const sequelize = new Sequelize('aoajtulo', 'root', '1234', {
-  host: 'localhost',
-  dialect: 'mysql'
-});
+const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+        console.log('MongoDB connected successfully');
+    } catch (err) {
+        console.error('MongoDB connection error:', err.message);
+        process.exit(1); // Exit process with failure
+    }
+};
 
-module.exports = sequelize;
+module.exports = connectDB;

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
+    <title>Reset Password</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Include Vue.js CDN -->
@@ -11,24 +11,22 @@
 </head>
 <body class="bg-light d-flex justify-content-center align-items-center vh-100">
     <div id="app" class="card p-4 shadow-sm" style="max-width: 400px; width: 100%;">
-        <h2 class="text-center text-primary mb-3">Login</h2>
-        <p class="text-center text-muted mb-4">Hey, enter your details to sign in to your account</p>
-        <form @submit.prevent="login">
+        <h2 class="text-center text-primary mb-3">Reset Password</h2>
+        <form @submit.prevent="resetPassword">
             <div class="form-group">
-                <input type="email" class="form-control rounded-pill" id="email" v-model="email" placeholder="Enter your email" required />
+                <input type="email" class="form-control rounded-pill" v-model="email" placeholder="Enter your email" required />
             </div>
-
             <div class="form-group">
-                <input type="password" class="form-control rounded-pill" id="password" v-model="password" placeholder="Enter your password" required />
+                
+                <input type="text" class="form-control rounded-pill" v-model="answer" :placeholder="question" required />
             </div>
-
-            <button type="submit" class="btn btn-primary btn-block rounded-pill">Login</button>
+            <div class="form-group">
+                <input type="password" class="form-control rounded-pill" v-model="newPassword" placeholder="Enter your new password" required />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block rounded-pill">Reset Password</button>
             <p v-if="errorMessage" class="text-danger mt-3 text-center">{{ errorMessage }}</p>
+            <p v-if="successMessage" class="text-success mt-3 text-center">{{ successMessage }}</p>
         </form>
-        <div class="text-center mt-3">
-            <p>Don't have an account? <a href="/admin/signup" class="text-primary">Sign Up Now</a></p>
-            <p><a href="/admin/reset" class="text-primary">Forgot Password?</a></p>
-        </div>
     </div>
 
     <!-- Include Bootstrap JS and dependencies -->
@@ -41,32 +39,55 @@
             el: '#app',
             data: {
                 email: '',
-                password: '',
-                errorMessage: ''
+                answer: '',
+                newPassword: '',
+                errorMessage: '',
+                successMessage: '',
+                question: ''
+            },
+            created() {
+                this.setRandomQuestion();
             },
             methods: {
-                async login() {
+                setRandomQuestion() {
+                    const questions = [
+                        'Enter your age',
+                        'Enter your NID number',
+                        'Enter your district',
+                        'Enter your phone number'
+                    ];
+                    this.question = questions[Math.floor(Math.random() * questions.length)];
+                },
+                async resetPassword() {
                     try {
-                        const response = await fetch('/admin/login', {
+                        const response = await fetch('/admin/reset-password', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({
                                 email: this.email,
-                                password: this.password
+                                answer: this.answer,
+                                newPassword: this.newPassword
                             })
                         });
 
                         const data = await response.json();
 
                         if (data.success) {
-                            window.location.href = '/admin/dashboard';
+                            this.successMessage = data.message;
+                            this.errorMessage = '';
+                            setTimeout(() => {
+                                window.location.href = '/admin/login';
+                            }, 1000);
+
                         } else {
                             this.errorMessage = data.message;
+                            this.successMessage = '';
                         }
                     } catch (error) {
                         this.errorMessage = 'An error occurred. Please try again.';
+                        this.successMessage = '';
                     }
                 }
             }

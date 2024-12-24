@@ -3,31 +3,98 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>aoaj tulo</title>
+    <title>Admin Signup</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Vue.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
   </head>
-  <body>
-    <form action="/admin" method="POST">
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required />
+  <body class="bg-light d-flex justify-content-center align-items-center vh-100">
+    <div id="app" class="card p-4 shadow-sm" style="max-width: 600px; width: 100%;">
+      <h2 class="text-center text-primary mb-3">Sign Up</h2>
+      <p class="text-center text-muted mb-4">Create your account by filling in the details below</p>
+      <form @submit.prevent="submitForm">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <input type="text" class="form-control rounded-pill" id="username" v-model="formData.username" placeholder="Enter your username" required />
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control rounded-pill" id="name" v-model="formData.name" placeholder="Enter your name" required />
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control rounded-pill" id="number" v-model="formData.number" placeholder="Enter your phone number" required />
+            </div>
+            <div class="form-group">
+              <input type="email" class="form-control rounded-pill" id="email" v-model="formData.email" placeholder="Enter your email" required />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <input type="password" class="form-control rounded-pill" id="password" v-model="formData.password" placeholder="Enter your password" required autocomplete="new-password" />
+            </div>
+            <div class="form-group">
+              <input type="number" class="form-control rounded-pill" id="age" v-model="formData.age" placeholder="Enter your age" required />
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control rounded-pill" id="district" v-model="formData.district" placeholder="Enter your district" required />
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control rounded-pill" id="nid_number" v-model="formData.nid_number" placeholder="Enter your NID number" required />
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block rounded-pill">Sign Up</button>
+      </form>
+      <div class="text-center mt-3">
+        <p>Already have an account? <a href="/admin/login" class="text-primary">Sign In</a></p>
       </div>
+    </div>
 
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required />
-      </div>
+    <!-- Include Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required />
-      </div>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          formData: {
+            username: '',
+            name: '',
+            number: '',
+            email: '',
+            password: '',
+            age: '',
+            district: '',
+            nid_number: ''
+          }
+        },
+        methods: {
+          async submitForm() {
+            try {
+              const response = await fetch('/admin', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(this.formData)
+              });
 
-      <div class="form-group">
-        <label for="age">Age:</label>
-        <input type="number" id="age" name="age" required />
-      </div>
+              const data = await response.json();
 
-      <button type="submit">Submit</button>
-    </form>
+              if (data.success) {
+                window.location.href = '/admin/dashboard';
+              } else {
+                alert('Signup failed: ' + data.message);
+              }
+            } catch (error) {
+              alert('An error occurred. Please try again.');
+            }
+          }
+        }
+      });
+    </script>
   </body>
 </html>
