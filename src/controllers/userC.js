@@ -28,9 +28,8 @@ module.exports.upload = upload.fields([{ name: 'image', maxCount: 1 }, { name: '
   }
 
 module.exports.createIssue = upload.fields([{ name: "image" }, { name: "video" }]), async(req, res) => {
-    // Access text fields
-    console.log("Form fields:", req.body.issueTitle); 
-    console.log("Form fields:", req.body.description); 
+    
+
     const issueTitle = req.body.issueTitle 
     const description = req.body.description  
   
@@ -60,7 +59,7 @@ module.exports.renderAllIssue = async (req, res) => {
     const { username } = req.params;
   
     try {
-      // Fetch the user by username
+ 
       const user = await User.findOne({ username });
       if (!user) {
         return res.status(404).send('User not found');
@@ -68,9 +67,9 @@ module.exports.renderAllIssue = async (req, res) => {
   
       
       const issues = await Issue.find({ username });
-      console.log(issues)
+      
   
-      // Render the EJS page and pass the issues data
+      
       res.render('issues', { issues, username });
     } catch (error) {
       console.error('Error fetching issues:', error);
