@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="#">VR</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,11 +55,11 @@
             </div>
 
             <div class="card-footer text-center">
-                <form action="/createIssue" class="mb-3">
+                <form action="/user/createIssue" class="mb-3">
                     <button type="submit" class="btn btn-success btn-lg">Post Issue</button>
                 </form>
 
-                <form action="/userIssues/<%= user.username %>">
+                <form action="/user/userIssues/<%= user.username %>">
                     <button type="submit" class="btn btn-info btn-lg">Show Your Issues</button>
                 </form>
             </div>
