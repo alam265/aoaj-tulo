@@ -4,7 +4,8 @@ const Issue = require("../models/Issue")
 const {upload} = require("../cloudinary/main")
 
 module.exports.dashboard = (req, res)=> { 
-    res.render('dashboard'); 
+    const user = req.session.User
+    res.render('dashboard', {user}); 
 } 
 
 module.exports.renderCreateIssue = (req, res)=> {
