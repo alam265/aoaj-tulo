@@ -92,8 +92,25 @@
                   <!-- Downvote Icon -->
                   <i class="fas fa-arrow-down"></i>
                 </div>
+                <div class="ms-auto d-inline">
+
+                  <div  >
+                    <form action="/user/<%= issue._id %>/edit" >
+                      <button class="btn btn-warning">Edit</button>
+                    </form>
+                  </div>
+                  <div class="d-inline" >
+                    <form action="/user/<%= issue._id %>/delete" method="post" >
+                      <button class="btn btn-danger">Delete</button>
+                    </form>
+                  </div>
+  
+
+                </div>
+    
               </div>
             </div>
+
           </div>
         <% }) %>
       </div>

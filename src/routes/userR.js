@@ -19,4 +19,16 @@ router.get('/userIssues/:username', userC.renderAllIssue)
 
 router.get("/dashboard", userC.dashboard)
 
+//delete issue
+router.post("/:issueId/delete", userC.deleteIssue)
+
+//edit issue 
+
+
+router.get("/:issueId/edit", userC.renderEdit)
+router.post("/issue/:issueId/edit" , userC.editIssue)
+
+
+// router.get("/issue/:issueId", userC.fetchIssue)
+
 module.exports = router
