@@ -12,7 +12,7 @@ router.get("/login", authentcationC.renderLogin)
 
 
 router.post("/register",authentcationC.register)
-router.post("/login", authentcationC.login )
+router.post("/login", authentcationC.login)
 router.get("/logout", authentcationC.logout)
 
 
