@@ -10,7 +10,7 @@ module.exports.checkLogin = (req, res,next) => {
         if (err) {
           return res.status(403).json({ message: 'Invalid token' });
         }
-        req.User = user.Username 
+        req.User = user;
         next();
       });
     }
