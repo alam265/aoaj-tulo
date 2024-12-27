@@ -1,23 +1,25 @@
 const express = require("express")
 const router = express.Router()
-const { renderSignup, renderLogin, renderReset, saveAdmin, loginAdmin, resetPassword } = require("../controllers/admin.controller")
+const { renderSignup, renderLogin, renderReset, saveAdmin, loginAdmin, resetPassword, logout } = require("../controllers/admin.controller")
+const { getAllIssues, updateIssueStatus, getIssueStats } = require('../controllers/admin.issue.controller')
+const { renderDashboard } = require('../controllers/admin.dashboard.controller')
 
-// Route to render the signup page
+//signup
 router.get("/admin/signup", renderSignup)
-
-// Route to handle signup form submission
 router.post("/admin", saveAdmin)
-
-// Route to render the login page
+//sign in
 router.get("/admin/login", renderLogin)
-
-// Route to handle login form submission
 router.post("/admin/login", loginAdmin)
-
-// Route to render the password reset page
+//logout
+router.get('/admin/logout', logout)
+//reset
 router.get("/admin/reset", renderReset)
-
-// Route to handle password reset form submission
 router.post("/admin/reset-password", resetPassword)
+//dashboard
+router.get('/admin/dashboard', renderDashboard)
+// Issue
+router.post('/admin/issues/update-status', updateIssueStatus)
+router.get('/admin/issues/stats', getIssueStats)
+
 
 module.exports = router

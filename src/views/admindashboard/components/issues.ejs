@@ -1,0 +1,55 @@
+<div class="container mt-4">
+  <div class="card mb-3" v-for="issue in issues" :key="issue.id">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <div>
+        <h5 class="card-title mb-0">{{ issue.title }}</h5>
+        <span class="badge badge-secondary">{{ issue.category }}</span>
+      </div>
+      <div class="status-badge">
+        <span :class="getStatusBadgeClass(issue.status)">{{
+          issue.status
+        }}</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{ issue.description }}</p>
+      <p class="card-text">
+        <small class="text-muted">Location: {{ issue.location }}</small>
+      </p>
+      <p class="card-text">
+        <small class="text-muted"
+          >Reported on:
+          {{ new Date(issue.createdAt).toLocaleDateString() }}</small
+        >
+      </p>
+    </div>
+    <div class="card-footer">
+      <div class="d-flex justify-content-start mb-3">
+        <div class="me-4">
+          <p class="card-text">
+            <i class="fas fa-thumbs-up"></i>
+            {{ issue.upvotes ? issue.upvotes.length : 0 }} upvotes
+          </p>
+        </div>
+        <div>
+          <p class="card-text">
+            <i class="fas fa-thumbs-down"></i>
+            {{ issue.downvotes ? issue.downvotes.length : 0 }} downvotes
+          </p>
+        </div>
+      </div>
+      <select class="form-control mb-2" v-model="issue.status">
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Resolved">Resolved</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+      <button
+        class="btn btn-primary"
+        @click="updateIssueStatus(issue._id, issue.status)"
+      >
+        Update Status
+      </button>
+    </div>
+  </div>
+</div>

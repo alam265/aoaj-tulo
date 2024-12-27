@@ -26,7 +26,7 @@ module.exports.saveAdmin = async (req, res) => {
             });
         }
 
-        // Check if email already exists
+        // it checks if the admin already there
         const existingAdmin = await Admin.findOne({ email });
         if (existingAdmin) {
             return res.status(409).json({
@@ -163,3 +163,12 @@ module.exports.resetPassword = async (req, res) => {
         });
     }
 };
+
+module.exports.logout = (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ message: 'Logout failed' });
+      }
+      res.redirect('/admin/login');
+    });
+}
