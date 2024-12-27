@@ -41,9 +41,13 @@ mongoose.connect('mongodb://127.0.0.1:27017/AoajTulo')
 // Importing Routes 
 const authRoute = require("./routes/authenticationR")
 const userR = require("./routes/userR")
+const adminRouter = require("./routes/admin");
+const allIssuesRouter = require("./routes/allIssuesRouter")
 
 app.use('/user', userR)
 app.use("/auth/user", authRoute) 
+app.use("/admin", adminRouter);
+app.use("/allIssues", allIssuesRouter);
 
 app.get("/", (req, res)=> {
    const user = req.session.user

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Issues</title>
+  <link rel="stylesheet" href="/styles.css"> 
+</head>
+<body>
+  <header>
+    <h1>All Issues</h1>
+    <div class="filter-container">
+      <button class="sort-btn">Sort by</button>
+      <button class="filter-btn">Filter</button>
+    </div>
+  </header>
+
+  <main class="issues-list">
+    <% if (issues.length > 0) { %>
+      <% issues.forEach(issue => { %>
+        <div class="issue-card">
+          <div class="issue-header">
+            <span>@<%= issue.User ? issue.User.Username : 'Unknown' %></span>
+          </div>
+          <div class="issue-body">
+            <h2><%= issue.Title %></h2>
+            <p><%= issue.Description %></p>
+          </div>
+          <div class="issue-footer">
+            <div class="vote-actions">             
+              <a href="/issues/<%= issue.IssueID %>/<%= user._id %>/upvote" class="vote-btn">
+                ⬆️ <%= issue.Upvotes.length %>
+              </a>
+              <a href="/issues/<%= issue.IssueID %>/<%= user._id %>/downvote" class="vote-btn">
+                ⬇️ <%= issue.Downvotes.length %>
+              </a>
+            </div>
+            <a href="/issues/<%= issue.IssueID %>" class="details-btn">See Details</a>
+          </div>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p class="empty-state">No issues found. Check back later!</p>
+    <% } %>
+  </main>
+</body>
+</html>
