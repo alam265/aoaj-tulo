@@ -6,9 +6,14 @@ const authentcationC = require("../controllers/authincationC")
 
 
 
+
+router.get("/register", authentcationC.renderReg)
+router.get("/login", authentcationC.renderLogin)
+
+
 router.post("/register",authentcationC.register)
 router.post("/login", authentcationC.login )
-router.post("/logout", authentcationC.logout)
+router.get("/logout", authentcationC.logout)
 
 
 module.exports = router

@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://media.istockphoto.com/id/1252564431/photo/concept-against-racism-or-racial-discrimination-by-showing-with-hand-gestures-fist-or.webp?a=1&b=1&s=612x612&w=0&k=20&c=GUdV9uQdIiyozWR1wNiCIaU_8AlZ41djIo7n9vfCXFg=');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+.cover-container {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn {
+    background-color: #ffffff;
+    color: black;
+}
+
+.btn:hover {
+    background-color: #cccccc;
+}
+
+footer {
+    color: rgba(255, 255, 255, 0.6);
+}
