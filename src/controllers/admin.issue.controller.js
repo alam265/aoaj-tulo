@@ -20,7 +20,6 @@ exports.getAllIssues = async (req, res) => {
 // Update issue status
 exports.updateIssueStatus = async (req, res) => {
     try {
-        console.log('Processing update request:', req.body);
         const { _id, status } = req.body;
         
         const updatedIssue = await Issue.findByIdAndUpdate(
@@ -28,8 +27,6 @@ exports.updateIssueStatus = async (req, res) => {
             { status: status },
             { new: true }
         );
-
-        console.log('Updated issue:', updatedIssue);
 
         if (!updatedIssue) {
             return res.status(404).json({ success: false, message: 'Issue not found' });
