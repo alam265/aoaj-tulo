@@ -26,11 +26,17 @@ const testIssues = [
             comment: "এই সমস্যাটি দ্রুত সমাধান করা প্রয়োজন",
             date: new Date()
         }],
-        anonymous: false
+        anonymous: false,
+        adminResponse: {
+            message: "",
+            updatedAt: new Date()
+        },
+        createdAt: new Date(),
+        updatedAt: new Date()
     },
     {
         title: "মোহাম্মদপুর বাস টার্মিনালের অবস্থা",
-        description: "মোহাম্মদপুর বাস টার্মিনালে পর্যা��্ত আলো নেই এবং নিরাপত্তার অভাব রয়েছে। রাতের বেলা যাত্রীদের নিরাপত্তা ঝুঁকিতে রয়েছে।",
+        description: "মোহাম্মদপুর বাস টার্মিনালে পর্যাপ্ত আলো নেই এবং নিরাপত্তার অভাব রয়েছে। রাতের বেলা যাত্রীদের নিরাপত্তা ঝুঁকিতে রয়েছে।",
         category: "Infrastructure",
         location: "মোহাম্মদপুর, ঢাকা",
         status: "Under Review",
@@ -40,7 +46,13 @@ const testIssues = [
         upvotes: [],
         downvotes: [],
         comments: [],
-        anonymous: true
+        anonymous: true,
+        adminResponse: {
+            message: "",
+            updatedAt: new Date()
+        },
+        createdAt: new Date(),
+        updatedAt: new Date()
     },
     {
         title: "বনানী স্কুলের সামনে অবৈধ পার্কিং",
@@ -54,7 +66,13 @@ const testIssues = [
         upvotes: [],
         downvotes: [],
         comments: [],
-        anonymous: false
+        anonymous: false,
+        adminResponse: {
+            message: "",
+            updatedAt: new Date()
+        },
+        createdAt: new Date(),
+        updatedAt: new Date()
     },
     {
         title: "মিরপুর শেওড়াপাড়া কমিউনিটি ক্লিনিকের সমস্যা",
@@ -68,7 +86,13 @@ const testIssues = [
         upvotes: [],
         downvotes: [],
         comments: [],
-        anonymous: false
+        anonymous: false,
+        adminResponse: {
+            message: "",
+            updatedAt: new Date()
+        },
+        createdAt: new Date(),
+        updatedAt: new Date()
     },
     {
         title: "গুলশান লেকের পানি দূষণ",
@@ -86,7 +110,13 @@ const testIssues = [
             comment: "এই সমস্যা সমাধানে দ্রুত পদক্ষেপ নেওয়া উচিত",
             date: new Date()
         }],
-        anonymous: false
+        anonymous: false,
+        adminResponse: {
+            message: "",
+            updatedAt: new Date()
+        },
+        createdAt: new Date(),
+        updatedAt: new Date()
     }
 ];
 

@@ -12,12 +12,14 @@ exports.getStatusBadgeClass = function(status) {
 };
 
 //here i pass the issue id and the new status which post a request to the update route
-exports.updateIssueStatus = async function(issueId, newStatus) {
+exports.updateIssueStatus = async function(issueId, newStatus, adminResponseMessage) {
     try {
         const requestBody = {
             _id: issueId,
-            status: newStatus
+            status: newStatus,
+            adminResponse: adminResponseMessage
         };
+        console.log(requestBody);
         const response = await fetch('/admin/issues/update-status', {
             method: 'POST',
             headers: {
@@ -66,7 +68,7 @@ exports.renderDashboard = async (req, res) => {
     try {
         const issues = await Issue.find()
             .sort({ createdAt: -1 })
-            .select('title description category location status createdAt');
+            .select('title description category location status createdAt adminResponse');
 
         res.render('admindashboard/dashboard', {
             issues: issues,

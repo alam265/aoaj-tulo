@@ -22,6 +22,9 @@
           {{ new Date(issue.createdAt).toLocaleDateString() }}</small
         >
       </p>
+      <p class="card-text" v-if="issue.adminResponse && issue.adminResponse.message">
+        <strong>Admin Response:</strong> {{ issue.adminResponse.message }}
+      </p>
     </div>
     <div class="card-footer">
       <div class="d-flex justify-content-start mb-3">
@@ -43,13 +46,12 @@
         <option value="In Progress">In Progress</option>
         <option value="Resolved">Resolved</option>
         <option value="Rejected">Rejected</option>
-      </select>
-      <button
-        class="btn btn-primary"
-        @click="updateIssueStatus(issue._id, issue.status)"
-      >
-        Update Status
-      </button>
+    </select>
+    <textarea class="form-control mt-2" v-model="issue.adminResponse.message" placeholder="Write your response here..."></textarea>
+    <button class="btn btn-primary mt-2" @click="updateIssueStatus(issue._id, issue.status, issue.adminResponse.message)">
+        Update Status and Send Response
+    </button>
+    </div>
     </div>
   </div>
 </div>

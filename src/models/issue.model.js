@@ -30,6 +30,16 @@ const issueSchema = new mongoose.Schema({
         enum: ['Pending', 'Under Review', 'Resolved'],
         default: 'Pending'
     },
+    adminResponse: {
+        message: {
+            type: String,
+            default: ''
+        },
+        updatedAt: {
+            type: Date,
+            default: Date.now
+        }
+    },
     upvotes: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

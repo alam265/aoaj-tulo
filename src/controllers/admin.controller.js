@@ -165,10 +165,14 @@ module.exports.resetPassword = async (req, res) => {
 };
 
 module.exports.logout = (req, res) => {
+    // Clear the session
     req.session.destroy((err) => {
-      if (err) {
-        return res.status(500).json({ message: 'Logout failed' });
-      }
-      res.redirect('/admin/login');
+        if (err) {
+            return res.status(500).json({ message: 'Logout failed' });
+        }
+        // Clear any auth cookies if they exist
+        res.clearCookie('connect.sid');
+        // Use 302 status for proper redirect
+        res.status(302).redirect('/admin/login');
     });
-}
+};
