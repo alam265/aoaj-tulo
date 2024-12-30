@@ -68,10 +68,16 @@ exports.renderDashboard = async (req, res) => {
     try {
         const issues = await Issue.find()
             .sort({ createdAt: -1 })
-            .select('title description category location status createdAt adminResponse');
+            .select('title description category location status createdAt adminResponse')
+            .lean();
+
+        const processedIssues = issues.map(issue => ({
+            ...issue,
+            adminResponse: issue.adminResponse || { message: '', updatedAt: new Date() }
+        }));
 
         res.render('admindashboard/dashboard', {
-            issues: issues,
+            issues: processedIssues,
             dashboardScript: {
                 methods: {
                     getStatusBadgeClass: exports.getStatusBadgeClass.toString(),

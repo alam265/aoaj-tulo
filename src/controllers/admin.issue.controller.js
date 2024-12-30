@@ -21,7 +21,6 @@ exports.getAllIssues = async (req, res) => {
 exports.updateIssueStatus = async (req, res) => {
     try {
         const { _id, status, adminResponse } = req.body;
-        console.log('Received request body:', req.body);
         
         const updateData = {
             status: status,
@@ -30,11 +29,10 @@ exports.updateIssueStatus = async (req, res) => {
                 updatedAt: Date.now()
             }
         };
-        console.log('Update data:', updateData);
 
         const updatedIssue = await Issue.findByIdAndUpdate(
             _id,
-            updateData,
+            { $set: updateData },
             { new: true }
         );
 
@@ -42,11 +40,8 @@ exports.updateIssueStatus = async (req, res) => {
             return res.status(404).json({ success: false, message: 'Issue not found' });
         }
 
-        console.log('Updated Issue:', updatedIssue);
-
         res.json({ success: true, issue: updatedIssue });
     } catch (error) {
-        console.error('Update error:', error);
         res.status(500).json({ success: false, message: error.message });
     }
 };

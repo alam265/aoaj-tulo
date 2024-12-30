@@ -31,14 +31,17 @@ const issueSchema = new mongoose.Schema({
         default: 'Pending'
     },
     adminResponse: {
-        message: {
-            type: String,
-            default: ''
+        type: {
+            message: {
+                type: String,
+                default: ''
+            },
+            updatedAt: {
+                type: Date,
+                default: Date.now
+            }
         },
-        updatedAt: {
-            type: Date,
-            default: Date.now
-        }
+        default: { message: '', updatedAt: Date.now() }
     },
     upvotes: [{
         type: mongoose.Schema.Types.ObjectId,

@@ -101,7 +101,19 @@ module.exports.loginAdmin = async (req, res) => {
             });
         }
 
-        const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        // Create token with admin info
+        const token = jwt.sign(
+            { 
+                id: admin._id,
+                email: admin.email,
+                username: admin.username
+            }, 
+            process.env.JWT_SECRET, 
+            { expiresIn: '1h' }
+        );
+
+        // Store token in session
+        req.session.token = token;
 
         return res.status(200).json({
             success: true,
