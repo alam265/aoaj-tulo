@@ -28,6 +28,24 @@ const issueSchema = new mongoose.Schema({
       message: 'Invalid image URL'
     }
   },
+  status: {
+    type: String,
+    enum: ['Pending', 'Under Review', 'Resolved'],
+    default: 'Pending'
+},
+  adminResponse: {
+    type: {
+        message: {
+            type: String,
+            default: ''
+        },
+        updatedAt: {
+            type: Date,
+            default: Date.now
+        }
+    },
+    default: { message: '', updatedAt: Date.now() }
+},
   videoURL: {
     type: String,
     validate: {
@@ -47,6 +65,7 @@ const issueSchema = new mongoose.Schema({
     ref: 'User' // Reference to the User model
   }]
 }, 
+
 
 
 {

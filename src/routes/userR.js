@@ -9,11 +9,11 @@ const router = express.Router([mergeParams = true])
 // Controller import 
 const userC = require("../controllers/userC")
 
-router.get("/createIssue", userC.renderCreateIssue)
+router.get("/issue/createIssue", userC.renderCreateIssue)
 
-router.post('/upload', userC.upload)
+// router.post('/upload', userC.upload)
 
-router.post("/createIssue", userC.createIssue)
+router.post("/issue/createIssue", userC.createIssue)
 
 router.get('/userIssues/:username', userC.renderAllIssue)
 

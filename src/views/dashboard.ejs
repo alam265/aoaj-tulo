@@ -32,6 +32,9 @@
                     </li>
                     <% } else { %>
                     <li class="nav-item">
+                        <a class="nav-link" href="/allIssues">All Issues</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/auth/user/logout">Logout</a>
                     </li>
                     <% } %>
@@ -55,12 +58,16 @@
             </div>
 
             <div class="card-footer text-center">
-                <form action="/user/createIssue" class="mb-3">
+                <form action="/user/issue/createIssue" class="mb-3">
                     <button type="submit" class="btn btn-success btn-lg">Post Issue</button>
                 </form>
 
                 <form action="/user/userIssues/<%= user.username %>">
                     <button type="submit" class="btn btn-info btn-lg">Show Your Issues</button>
+                </form>
+                <br>
+                <form action="/user/analytics/<%= user.username %>">
+                    <button type="submit" class="btn btn-outline-info">Show Analytics</button>
                 </form>
             </div>
         </div>

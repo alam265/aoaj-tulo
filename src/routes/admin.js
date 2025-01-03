@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const checkLogin  = require("../middlewares/checkLogin")
 
-router.get("/", checkLogin, async (req, res)=>{
-    
+router.get("/",  (req, res)=>{
+    res.send("hi")
 })
+
+
+module.exports = router

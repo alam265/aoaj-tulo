@@ -12,26 +12,25 @@ module.exports.renderCreateIssue = (req, res)=> {
     res.render('createIssue')
 }
 
-module.exports.upload = upload.fields([{ name: 'image', maxCount: 1 }, { name: 'video', maxCount: 1 }]), (req, res) => {
-    if (!req.files || !req.body.issueTitle || !req.body.description) {
-      return res.status(400).send('All fields are required.');
-    }
+// module.exports.upload = upload.fields([{ name: 'image', maxCount: 1 }, { name: 'video', maxCount: 1 }]), (req, res) => {
+//     if (!req.files || !req.body.issueTitle || !req.body.description) {
+//       return res.status(400).send('All fields are required.');
+//     }
   
-    const imageUrl = req.files['image'] ? req.files['image'][0].path : null;
-    const videoUrl = req.files['video'] ? req.files['video'][0].path : null;
+//     const imageUrl = req.files['image'] ? req.files['image'][0].path : null;
+//     const videoUrl = req.files['video'] ? req.files['video'][0].path : null;
   
-    // Send back the URLs of the uploaded image and video
-    res.json({
-      imageUrl,
-      videoUrl
-    });
-  }
+//     // Send back the URLs of the uploaded image and video
+//     res.json({
+//       imageUrl,
+//       videoUrl
+//     });
+//   }
 
-module.exports.createIssue = upload.fields([{ name: "image" }, { name: "video" }]), async(req, res) => {
+module.exports.createIssue = [upload.fields([{ name: "image" }, { name: "video" }]), async(req, res) => {
     
 
-    const issueTitle = req.body.issueTitle 
-    const description = req.body.description  
+    const {title, description} = req.body 
   
   
     
@@ -41,19 +40,19 @@ module.exports.createIssue = upload.fields([{ name: "image" }, { name: "video" }
   
     const newIssue = await Issue.create({
       username: req.session.User.username,
-      title: issueTitle,
+      title: title,
       description: description,
       imageURL: imgPath,
       videoURL: vPath,
     });
   
     
-  res.json({messsage :"Issue created!!", 
-    newIssue: newIssue
-  
-    })
+    const username = req.session.User.username
+    const issues = await Issue.find({username}) 
+
+    res.render('userIssues', {issues, username})
     
-  }
+  }]
 
 module.exports.renderAllIssue = async (req, res) => {
     const { username } = req.params;

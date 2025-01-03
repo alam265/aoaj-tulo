@@ -1,155 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Issue Report Form</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/vue@3.2.45/dist/vue.global.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Issue</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Post Issue</h1>
 
-<div id="app" class="container mt-5">
-  <h2>Submit an Issue Report</h2>
-  
-  <form @submit.prevent="submitForm">
-    <div class="mb-3">
-      <label for="issueTitle" class="form-label">Issue Title</label>
-      <input type="text" class="form-control" id="issueTitle" v-model="formData.issueTitle" required>
+        <form action="/user/issue/createIssue" method="POST" enctype="multipart/form-data" class="shadow p-4 rounded bg-light">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" id="title" name="title"  class="form-control" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea name="description" id="description" class="form-control" rows="4" required></textarea>
+            </div>
+            
+            <div class="mb-3">
+                <label for="imageFile" class="form-label">Choose Image</label>
+                <input type="file" class="form-control" id="imageFile" name="image" accept="image/*">
+            </div>
+            
+            <div class="mb-3">
+                <label for="videoFile" class="form-label">Choose Video</label>
+                <input type="file" class="form-control" id="videoFile" name="video" accept="video/*">
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary px-4">Post</button>
+                
+            </div>
+        </form>
     </div>
 
-    <div class="mb-3">
-      <label for="description" class="form-label">Description</label>
-      <textarea class="form-control" id="description" v-model="formData.description" rows="3" required></textarea>
-    </div>
-
-    <div class="mb-3">
-      <label for="imageFile" class="form-label">Choose Image</label>
-      <input type="file" class="form-control" id="imageFile" @change="handleImageUpload" accept="image/*">
-    </div>
-
-    <div class="mb-3">
-      <label for="videoFile" class="form-label">Choose Video</label>
-      <input type="file" class="form-control" id="videoFile" @change="handleVideoUpload" accept="video/*" required>
-    </div>
-
-    <!-- Upload Button -->
-    <button type="submit" class="btn btn-primary">Upload</button>
-    
-    <!-- Submit Button -->
-    <button type="button" class="btn btn-success ms-2" @click="submitIssue">Submit</button>
-  </form>
-
-  <div v-if="imageUrl" class="mt-4">
-    <h4>Uploaded Image</h4>
-    <img :src="imageUrl" alt="Uploaded Image" class="img-fluid fixed-size" />
-  </div>
-
-  <div v-if="videoUrl" class="mt-4">
-    <h4>Uploaded Video</h4>
-    <video :src="videoUrl" controls ></video>
-  </div>
-</div>
-
-<script>
-  const app = Vue.createApp({
-    data() {
-      return {
-        formData: {
-          issueTitle: '',
-          description: '',
-          imageFile: null,
-          videoFile: null
-        },
-        imageUrl: null,
-        videoUrl: null
-      };
-    },
-    methods: {
-      handleImageUpload(event) {
-        this.formData.imageFile = event.target.files[0];
-      },
-      handleVideoUpload(event) {
-        this.formData.videoFile = event.target.files[0];
-      },
-      async submitForm() {
-        if (!this.formData.videoFile) {
-          alert("Please select a video file.");
-          return;
-        }
-
-        const formData = new FormData();
-        formData.append('issueTitle', this.formData.issueTitle);
-        formData.append('description', this.formData.description);
-        formData.append('image', this.formData.imageFile);
-        formData.append('video', this.formData.videoFile);
-
-        try {
-          const response = await fetch('/user/upload', {
-            method: 'POST',
-            body: formData
-          });
-          const data = await response.json();
-
-          
-          
-          // Assuming the server sends back the image and video URLs
-          this.imageUrl = data.imageUrl;
-          this.videoUrl = data.videoUrl;
-        } catch (error) {
-          console.error("Error submitting form:", error);
-          alert("Error submitting form. Please try again.");
-        }
-      },
-  submitIssue() {
-    // Ensure all required fields are filled
-    if (!this.formData.issueTitle || !this.formData.description) {
-      alert("Please fill out all required fields.");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("issueTitle", this.formData.issueTitle);
-    formData.append("description", this.formData.description);
-    if (this.formData.imageFile) formData.append("image", this.formData.imageFile);
-    if (this.formData.videoFile) formData.append("video", this.formData.videoFile);
-
-    fetch("/user/createIssue", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to submit the issue.");
-        }
-         window.location.href = "/user/dashboard"
-      })
-      .then((data) => {
-        alert("Issue successfully created!");
-        console.log("Response from server:", data);
-
-       
-
-        // Optionally, reset form or navigate to another page
-        this.formData.issueTitle = "";
-        this.formData.description = "";
-        this.formData.imageFile = null;
-        this.formData.videoFile = null;
-        this.imageUrl = null;
-        this.videoUrl = null;
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        alert("An error occurred while creating the issue.");
-      });
-},
-
-    }
-  });
-
-  app.mount('#app');
-</script>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
