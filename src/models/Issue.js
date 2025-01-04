@@ -58,12 +58,17 @@ const issueSchema = new mongoose.Schema({
   },
   upVotes: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User' // Reference to the User model
+    ref: 'User' 
   }],
   downVotes: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User' // Reference to the User model
+    ref: 'User' 
+  }],
+  comments: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Comment' 
   }]
+ 
 }, 
 
 
