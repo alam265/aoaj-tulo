@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">VR</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <% if(!user) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/auth/user/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/auth/user/register">Register</a>
+                    </li>
+                    <% } else { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/allIssues">All Issues</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/auth/user/logout">Logout</a>
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2>Welcome <%= user.name %>!</h2>
+            </div>
+            <div class="card-body">
+                <h3>User Info:</h3>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Name:</strong> <%= user.name %></li>
+                    <li class="list-group-item"><strong>Email:</strong> <%= user.email %></li>
+                    <li class="list-group-item"><strong>NID:</strong> <%= user.nid %></li>
+                </ul>
+            </div>
+
+            <div class="card-footer text-center">
+                <form action="/user/issue/createIssue" class="mb-3">
+                    <button type="submit" class="btn btn-success btn-lg">Post Issue</button>
+                </form>
+
+                <form action="/user/userIssues/<%= user.username %>">
+                    <button type="submit" class="btn btn-info btn-lg">Show Your Issues</button>
+                </form>
+                <br>
+                <form action="/user/analytics/<%= user.username %>">
+                    <button type="submit" class="btn btn-outline-info">Show Analytics</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
