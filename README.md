@@ -37,10 +37,4 @@ A JavaScript-based platform to empower individuals and communities to raise thei
 
 Contributions are welcome! Please fork the repository and open a pull request with your improvements.
 
-## License
 
-Specify your license here (e.g., MIT, Apache 2.0, etc.).
-
----
-
-Would you like to include more details, such as deployment steps, API usage, screenshots, or contact info? Let me know if you'd like to customize any section further!
